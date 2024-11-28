@@ -1,0 +1,48 @@
+class Exame {
+    constructor(gabarito, peso) {
+      this.gabarito = gabarito;
+      this.peso = peso;
+    }
+  
+    calcularNota(respostas) {
+      let nota = 0;
+      for (let i = 0; i < this.gabarito.length; i++) {
+        if (respostas[i] === this.gabarito[i]) {
+          nota += 2 ;
+        }
+      }
+      return nota;
+    }
+  
+    calcularEstatisticas(respostasConjunto) {
+      let notaMaxima = -Infinity;
+      let notaMinima = Infinity;
+      let somaNotas = 0;
+  
+      for (const respostas of respostasConjunto) {
+        const nota = this.calcularNota(respostas);
+        somaNotas += nota;
+  
+        if (nota > notaMaxima)
+             notaMaxima = nota; 
+        if (nota < notaMinima) 
+            notaMinima = nota; 
+      }
+  
+      const media = somaNotas / respostasConjunto.length;
+      return { notaMaxima, notaMinima, media };
+    }
+  }
+const exame=new Exame(['a','b','a','c','d'],[2,2,2,2,2]);
+
+const respostasConjunto = [
+    ['a', 'b', 'c', 'd', 'b'],
+    ['a', 'b', 'a', 'c', 'd'], 
+    ['b', 'b', 'b', 'c', 'd'], 
+    ['a', 'b', 'a', 'c', 'c'] 
+  ];
+const estatisticas = exame.calcularEstatisticas(respostasConjunto);
+
+console.log(estatisticas.notaMaxima);
+console.log( estatisticas.notaMinima); 
+console.log(estatisticas.media);  
